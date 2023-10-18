@@ -1,0 +1,34 @@
+{
+  "PartyMembers": [
+    {
+      "Name": "Charles",
+      "Health": 10,
+      "Mana": 2,
+      "BaseSpeed": 2.0,
+      "BasePhysDamage": 2.0,
+      "BaseMagicDamage": 1.0,
+      "BasePhysDefense": 5.0,
+      "BaseMagicResist": 5.0
+    },
+    {
+      "Name": "Elizabeth",
+      "Health": 7,
+      "Mana": 5,
+      "BaseSpeed": 6.0,
+      "BasePhysDamage": 4.0,
+      "BaseMagicDamage": 1.0,
+      "BasePhysDefense": 2.0,
+      "BaseMagicResist": 2.0
+    },
+    {
+      "Name": "Percival",
+      "Health": 5,
+      "Mana": 15,
+      "BaseSpeed": 4.0,
+      "BasePhysDamage": 1.0,
+      "BaseMagicDamage": 4.0,
+      "BasePhysDefense": 2.0,
+      "BaseMagicResist": 3.0
+    }
+  ]
+}

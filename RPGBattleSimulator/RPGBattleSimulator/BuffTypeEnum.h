@@ -1,0 +1,3 @@
+#pragma once
+
+enum class BuffType {PHYSDAMAGE, MAGICDAMAGE, SPEED, PHYSDEFENSE, MAGICRESIST};

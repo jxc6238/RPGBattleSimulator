@@ -1,0 +1,28 @@
+{
+  "EquippedItems": [
+    {
+      "Name": "Helm of Strength",
+      "Slot": "HEAD",
+      "Buffs": [
+        {
+          "BuffType": "PHYSDAMAGE",
+          "BuffStat": 1.2
+        },
+        {
+          "BuffType": "PHYSDEFENSE",
+          "BuffStat": 1.3
+        }
+      ]
+    },
+    {
+      "Name": "Trinket of Speed",
+      "Slot": "TRINKET",
+      "Buffs": [
+        {
+          "BuffType": "SPEED",
+          "BuffStat": 1.1
+        }
+      ]
+    }
+  ]
+}
