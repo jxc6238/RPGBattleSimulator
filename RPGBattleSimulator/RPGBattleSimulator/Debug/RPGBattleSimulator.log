@@ -1,7 +1,2 @@
-﻿  Character.cpp
-  EquippedItem.cpp
-  InitBattle.cpp
-  Item.cpp
-  RPGBattleSimulator.cpp
-  Generating Code...
-  RPGBattleSimulator.vcxproj -> C:\Users\Jeffrey\source\repos\RPGBattleSimulator\Debug\RPGBattleSimulator.exe
+﻿  InitBattle.cpp
+  RPGBattleSimulator.vcxproj -> C:\Users\Jeffrey\Documents\GitHub\RPGBattleSimulator\RPGBattleSimulator\Debug\RPGBattleSimulator.exe

@@ -76,6 +76,8 @@ public:
 	void PrintItemSlots();
 
 	void ApplyDebuff(DebuffData* debuff);
+	void CalculateDebuff(DebuffType debuffType, double debuffMultiplier);
 	void UpdateDebuffs();
+	void RemoveDebuff(DebuffData* debuff);
 };
 

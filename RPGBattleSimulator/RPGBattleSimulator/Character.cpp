@@ -305,15 +305,83 @@ void Character::ApplyDebuff(DebuffData* debuff) {
 	}
 	if (debuffPresent == false) {
 		debuffs.push_back(debuff);
+		CalculateDebuff(debuff->GetDebuffType(), debuff->GetAfflictionModifier());
 	}
 	else {
 		debuffs[position]->DebuffAlreadyPresent();
 	}
 }
 
+/**
+corresponding pairs
+physdamage, magicdamage, speed, physdefense, magicdefense
+weak, weakwill, slow, fragile, magicfragile
+**/
+void Character::CalculateDebuff(DebuffType debuffType, double debuffMultiplier) {
+	switch (debuffType) {
+	case DebuffType::WEAK:
+		prevPhysDamage.first = BuffType::PHYSDAMAGE;
+		prevPhysDamage.second = currentPhysDamage;
+		SetPhysDamage(CalculateScale(currentPhysDamage, debuffMultiplier));
+		break;
+	case DebuffType::WEAKWILL:
+		prevMagicDamage.first = BuffType::MAGICDAMAGE;
+		prevMagicDamage.second = currentMagicDamage;
+		SetMagicDamage(CalculateScale(currentMagicDamage, debuffMultiplier));
+		break;
+	case DebuffType::SLOW:
+		prevSpeed.first = BuffType::SPEED;
+		prevSpeed.second = currentSpeed;
+		SetSpeed(CalculateScale(currentSpeed, debuffMultiplier));
+		break;
+	case DebuffType::FRAGILE:
+		prevPhysDefense.first = BuffType::PHYSDEFENSE;
+		prevPhysDefense.second = currentPhysDefense;
+		SetPhysDefense(CalculateScale(currentPhysDefense, debuffMultiplier));
+		break;
+	case DebuffType::MAGICFRAGILE:
+		prevMagicResist.first = BuffType::MAGICRESIST;
+		prevMagicResist.second = currentMagicResist;
+		SetMagicResist(CalculateScale(currentMagicResist, debuffMultiplier));
+	}
+}
+
 void Character::UpdateDebuffs() {
-	for (unsigned int i = 0; i < debuffs.size(); i++) {
-		debuffs[i]->DecreaseNumOfTurns();
+	DebuffData* tmp = NULL;
+	for (std::vector<DebuffData*>::iterator it = debuffs.begin(); it != debuffs.end();) {
+		if ((*it)->GetNumOfTurnsLeft() == 1) {
+			tmp = (*it);
+			it = debuffs.erase(it);
+			RemoveDebuff(tmp);
+			tmp->DecreaseNumOfTurns();
+		}
+		else {
+			(*it)->DecreaseNumOfTurns();
+			it++;
+		}
+	}
+	for (auto& debuff : debuffs) {
+		debuff->PrintDebuffData();
+	}
+}
+
+void Character::RemoveDebuff(DebuffData* debuff) {
+	switch (debuff->GetDebuffType()) {
+	case DebuffType::WEAK:
+		SetPhysDamage(prevPhysDamage.second);
+		break;
+	case DebuffType::WEAKWILL:
+		SetMagicDamage(prevMagicDamage.second);
+		break;
+	case DebuffType::SLOW:
+		SetSpeed(prevSpeed.second);
+		break;
+	case DebuffType::FRAGILE:
+		SetPhysDefense(prevPhysDefense.second);
+		break;
+	case DebuffType::MAGICFRAGILE:
+		SetMagicResist(prevMagicResist.second);
+		break;
 	}
 }
 

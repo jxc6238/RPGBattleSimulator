@@ -5,19 +5,21 @@
 class DebuffData
 {
 private:
-	int NumOfTurnsAffected;
-	int NumOfTurnsLeft;
-	double AfflictionModifier;
 	DebuffType debuff;
+	int numOfTurnsAffected;
+	int numOfTurnsLeft;
+	double afflictionModifier;
 public:
-	DebuffData(int NumOfTurnsAffected, double AfflictionModifier,
-		DebuffType debuff): NumOfTurnsAffected(NumOfTurnsAffected),
-		NumOfTurnsLeft(NumOfTurnsAffected), AfflictionModifier(AfflictionModifier),
-		debuff(debuff) {};
+	DebuffData(DebuffType debuff, int NumOfTurnsAffected, 
+		double AfflictionModifier): debuff(debuff), 
+		numOfTurnsAffected(NumOfTurnsAffected),
+		numOfTurnsLeft(NumOfTurnsAffected), 
+		afflictionModifier(AfflictionModifier) {};
 	int GetNumOfTurnsLeft();
 	double GetAfflictionModifier();
 	DebuffType GetDebuffType();
 	std::string GetDebuffAsString();
+	void PrintDebuffData();
 	void DecreaseNumOfTurns();
 	void DebuffAlreadyPresent();
 };

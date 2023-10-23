@@ -1,10 +1,11 @@
 #include "DebuffData.h"
+#include <iostream>
 
 int DebuffData::GetNumOfTurnsLeft() {
-	return NumOfTurnsLeft;
+	return numOfTurnsLeft;
 }
 double DebuffData::GetAfflictionModifier() {
-	return AfflictionModifier;
+	return afflictionModifier;
 }
 DebuffType DebuffData::GetDebuffType() {
 	return debuff;
@@ -29,11 +30,15 @@ std::string DebuffData::GetDebuffAsString() {
 	}
 }
 void DebuffData::DecreaseNumOfTurns() {
-	NumOfTurnsLeft--;
-	if (NumOfTurnsLeft == 0) {
+	numOfTurnsLeft--;
+	if (numOfTurnsLeft == 0) {
 		delete this;
 	}
 }
 void DebuffData::DebuffAlreadyPresent() {
-	NumOfTurnsLeft = NumOfTurnsAffected;
+	numOfTurnsLeft = numOfTurnsAffected;
+}
+void DebuffData::PrintDebuffData() {
+	std::cout << "Debuff: " << GetDebuffAsString() << " "
+		<< "Number of turns left: " << numOfTurnsLeft << std::endl;
 }

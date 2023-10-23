@@ -21,8 +21,17 @@ void InitBattle::InitializeGame() {
 	InitPlayerCharacters();
 	InitEquippedItems();
 	AddCharacterToParty();
-	EquipItem();
-	UnequipItem();
+/**
+	playerParty[0]->ApplyDebuff(new DebuffData(DebuffType::WEAK, 3, 0.9));
+	playerParty[0]->PrintCharacterStats();
+	playerParty[0]->ApplyDebuff(new DebuffData(DebuffType::SLOW, 2, 0.9));
+	playerParty[0]->PrintCharacterStats();
+	playerParty[0]->UpdateDebuffs();
+	playerParty[0]->UpdateDebuffs();
+	playerParty[0]->PrintCharacterStats();
+	//EquipItem();
+	//UnequipItem();
+**/
 }
 
 void InitBattle::InitEquippedItems() {
