@@ -128,7 +128,6 @@ void Character::EquipItem(EquippedItem* item) {
 	for (auto& buff : buffs) {
 		EquipScale(buff.buff, buff.buffStat);
 	}
-	PrintCharacterStats();
 }
 void Character::UnequipItem() {
 	unsigned int choice;

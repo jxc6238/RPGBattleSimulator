@@ -20,7 +20,14 @@ void InitBattle::InitPlayerCharacters() {
 void InitBattle::InitializeGame() {
 	InitPlayerCharacters();
 	InitEquippedItems();
-	AddCharacterToParty();
+	menuState = new MainMenuState();
+	do {
+		InitBattleMenuState* tmp = menuState;
+		menuState = menuState->Enter(this);
+		delete tmp;
+	} while (menuState != NULL);
+	std::cout << "Done!" << std::endl;
+	//AddCharacterToParty();
 /**
 	playerParty[0]->ApplyDebuff(new DebuffData(DebuffType::WEAK, 3, 0.9));
 	playerParty[0]->PrintCharacterStats();
@@ -74,10 +81,7 @@ void InitBattle::BuildBuffTypeMap(unordered_map<string, BuffType>& buffTypeMap) 
 void InitBattle::AddCharacterToParty() {
 	unsigned int characterSelection = 0;
 	unsigned int positionSelection = 0;
-	for (unsigned int i = 0; i < availablePartyMembers.size(); i++) {
-		std::cout << i + 1 << ": ";
-		availablePartyMembers[i]->PrintCharacterStats();		
-	}
+	PrintAvailablePartyMembers();
 	do {
 		std::cout << "Select party member: ";
 		std::cin >> characterSelection;
@@ -106,16 +110,19 @@ void InitBattle::RemoveCharacterFromParty() {
 }
 
 void InitBattle::PrintAvailablePartyMembers() {
-	std::cout << "Available Party Members: " << std::endl;
+	std::cout << std::setfill('-') << std::setw(30) << '-' <<
+		"Available Party members" <<
+		std::setfill('-') << std::setw(30) << '-' << std::endl;
 	for (unsigned int i = 0; i < availablePartyMembers.size(); i++) {
 		std::cout << i + 1 << ": ";
 		availablePartyMembers[i]->PrintCharacterStats();
 	}
-	std::cout << endl;
 }
 
 void InitBattle::PrintCharacterParty() {
-	std::cout << "Player Party: " << std::endl;
+	std::cout << std::setfill('-') << std::setw(30) << '-' <<
+		"Current Party" <<
+		std::setfill('-') << std::setw(30) << '-' << std::endl;
 	for (unsigned int i = 0; i < partySize; i++) {
 		std::cout << i + 1 << ": ";
 		if (playerParty[i] != NULL) {
@@ -138,13 +145,14 @@ void InitBattle::EquipItem() {
 		std::cout << std::endl;
 	} while (itemSelection < 1 || itemSelection > availableEquippedItems.size());
 	itemSelection--;
-	std::cout << std::endl << std::endl;
 	playerParty[characterSelection]->EquipItem(availableEquippedItems[itemSelection]);
 	availableEquippedItems.erase(availableEquippedItems.begin() + itemSelection);
-	PrintAvailableItems();
 }
 
 void InitBattle::PrintAvailableItems() {
+	std::cout << std::setfill('-') << std::setw(30) << '-' <<
+		"Available Items" <<
+		std::setfill('-') << std::setw(30) << '-' << std::endl;
 	for (unsigned int i = 0; i < availableEquippedItems.size(); i++) {
 		std::cout << i + 1 << ": ";
 		availableEquippedItems[i]->PrintItemInfo();
@@ -166,4 +174,8 @@ int InitBattle::SelectInPartyCharacter() {
 	} while (characterSelection < 1 || characterSelection > partySize);
 	characterSelection--;
 	return characterSelection;
+}
+
+void InitBattle::BeginBattle() {
+
 }

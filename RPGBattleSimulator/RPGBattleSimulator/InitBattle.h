@@ -1,11 +1,15 @@
 #pragma once
 #include "Character.h"
+#include "InitBattleMenuState.h"
+#include "MainMenuState.h"
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <unordered_map>
+
+class InitBattleMenuState;
 
 class InitBattle
 {
@@ -16,6 +20,7 @@ private:
 	Character* enemyParty[enemyPartySize];
 	vector<Character*> availablePartyMembers;
 	vector<EquippedItem*> availableEquippedItems;
+	InitBattleMenuState* menuState;
 public:
 	void InitializeGame();
 	void InitPlayerCharacters();
@@ -30,5 +35,6 @@ public:
 	void UnequipItem();
 	void PrintAvailableItems();
 	int SelectInPartyCharacter();
+	void BeginBattle();
 };
 
