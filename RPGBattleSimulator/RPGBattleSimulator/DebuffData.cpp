@@ -14,19 +14,16 @@ std::string DebuffData::GetDebuffAsString() {
 	switch (debuff) {
 	case DebuffType::WEAK:
 		return "WEAK";
-		break;
 	case DebuffType::WEAKWILL:
 		return "WEAKWILL";
-		break;
 	case DebuffType::SLOW:
 		return "SLOW";
-		break;
 	case DebuffType::FRAGILE:
 		return "FRAGILE";
-		break;
 	case DebuffType::MAGICFRAGILE:
 		return "WEAKWILL";
-		break;
+	default:
+		return "";
 	}
 }
 void DebuffData::DecreaseNumOfTurns() {
@@ -39,6 +36,6 @@ void DebuffData::DebuffAlreadyPresent() {
 	numOfTurnsLeft = numOfTurnsAffected;
 }
 void DebuffData::PrintDebuffData() {
-	std::cout << "Debuff: " << GetDebuffAsString() << " "
-		<< "Number of turns left: " << numOfTurnsLeft << std::endl;
+	std::cout << GetDebuffAsString() << " "
+		<< "Number of turns left: " << numOfTurnsLeft << "  ";
 }

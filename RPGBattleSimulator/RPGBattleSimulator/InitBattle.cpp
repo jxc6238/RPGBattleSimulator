@@ -27,14 +27,22 @@ void InitBattle::InitializeGame() {
 		delete tmp;
 	} while (menuState != NULL);
 	std::cout << "Done!" << std::endl;
-	//AddCharacterToParty();
 /**
+	//AddCharacterToParty();
 	playerParty[0]->ApplyDebuff(new DebuffData(DebuffType::WEAK, 3, 0.9));
 	playerParty[0]->PrintCharacterStats();
+	std::cout << std::endl;
 	playerParty[0]->ApplyDebuff(new DebuffData(DebuffType::SLOW, 2, 0.9));
+	playerParty[0]->ApplyBuff(new BuffData(BuffType::PHYSDAMAGE, 2, 1.1));
 	playerParty[0]->PrintCharacterStats();
+	std::cout << std::endl;
 	playerParty[0]->UpdateDebuffs();
+	playerParty[0]->UpdateBuffs();
+	playerParty[0]->PrintCharacterStats();
+	std::cout << std::endl;
 	playerParty[0]->UpdateDebuffs();
+	playerParty[0]->UpdateBuffs();
+	std::cout << std::endl;
 	playerParty[0]->PrintCharacterStats();
 	//EquipItem();
 	//UnequipItem();

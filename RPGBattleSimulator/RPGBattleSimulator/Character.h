@@ -1,9 +1,14 @@
 #pragma once
 #include "CurrentlyEquippedItems.h"
 #include "DebuffData.h"
+#include "BuffData.h"
+#include "BuffDebuffHandler.h"
+#include "Spell.h"
 #include <string>
 #include <iostream>
 using namespace std;
+
+class Spell;
 
 class Character
 {
@@ -19,6 +24,10 @@ private:
 		prevPhysDefense, prevMagicResist;
 	CurrentlyEquippedItems equippedItems;
 	vector<DebuffData*> debuffs;
+	vector<BuffData*> buffs;
+	vector<Spell*> spells;
+	static BuffDebuffHandler buffDebuffHandler;
+
 public:
 	Character(string name, int health, int mana, double baseSpeed,
 		double basePhysDamage, double baseMagicDamage,
@@ -35,7 +44,7 @@ public:
 		prevMagicDamage(BuffType::MAGICDAMAGE, baseMagicDamage),
 		prevPhysDefense(BuffType::PHYSDEFENSE, basePhysDefense),
 		prevMagicResist(BuffType::MAGICRESIST, baseMagicResist),
-		equippedItems(), debuffs() {};
+		equippedItems(), debuffs(), spells() {};
 
 	void SetHealth(int healthValue);
 	void SetMana(int manaValue);
@@ -79,5 +88,18 @@ public:
 	void CalculateDebuff(DebuffType debuffType, double debuffMultiplier);
 	void UpdateDebuffs();
 	void RemoveDebuff(DebuffData* debuff);
+
+	void ApplyBuff(BuffData* buff);
+	void CalculateBuff(BuffType buff, double buffMultiplier);
+	void UpdateBuffs();
+	void RemoveBuff(BuffData* buff);
+
+	bool BuffPresentCheck(BuffType buff);
+	bool DebuffPresentCheck(DebuffType debuff);
+	int GetDebuffPosition(DebuffType debuff);
+	int GetBuffPosition(BuffType buff);
+
+	void PrintBuffData();
+	void PrintDebuffData();
 };
 

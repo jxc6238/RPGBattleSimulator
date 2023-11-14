@@ -139,25 +139,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BuffData.cpp" />
+    <ClCompile Include="BuffDebuffHandler.cpp" />
+    <ClCompile Include="BuffFactory.cpp" />
+    <ClCompile Include="BuffSpell.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterSelectMenuState.cpp" />
+    <ClCompile Include="ConsumableItem.cpp" />
+    <ClCompile Include="DamageSpell.cpp" />
     <ClCompile Include="DebuffData.cpp" />
+    <ClCompile Include="DebuffFactory.cpp" />
+    <ClCompile Include="DebuffSpell.cpp" />
     <ClCompile Include="EquippedItem.cpp" />
+    <ClCompile Include="HealingSpell.cpp" />
     <ClCompile Include="InitBattle.cpp" />
     <ClCompile Include="InitBattleMenuState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemMenuState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="ModifierSpell.cpp" />
     <ClCompile Include="RPGBattleSimulator.cpp" />
+    <ClCompile Include="Spell.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuffData.h" />
+    <ClInclude Include="BuffDebuffHandler.h" />
+    <ClInclude Include="BuffFactory.h" />
+    <ClInclude Include="BuffSpell.h" />
     <ClInclude Include="BuffTypeEnum.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterSelectMenuState.h" />
+    <ClInclude Include="ConsumableItem.h" />
     <ClInclude Include="CurrentlyEquippedItems.h" />
+    <ClInclude Include="DamageSpell.h" />
     <ClInclude Include="DebuffData.h" />
+    <ClInclude Include="DebuffFactory.h" />
+    <ClInclude Include="DebuffSpell.h" />
     <ClInclude Include="DebuffTypeEnum.h" />
     <ClInclude Include="EquippedItem.h" />
+    <ClInclude Include="HealingSpell.h" />
     <ClInclude Include="InitBattle.h" />
     <ClInclude Include="InitBattleMenuState.h" />
     <ClInclude Include="Item.h" />
@@ -165,6 +185,8 @@
     <ClInclude Include="ItemMenuState.h" />
     <ClInclude Include="ItemSlotsEnum.h" />
     <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="ModifierSpell.h" />
+    <ClInclude Include="Spell.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PartyMembers.txt" />

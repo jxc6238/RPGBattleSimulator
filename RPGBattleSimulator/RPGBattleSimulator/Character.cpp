@@ -1,6 +1,9 @@
 #include "Character.h"
 #include <iomanip>
 
+BuffDebuffHandler Character::buffDebuffHandler;
+
+
 void Character::SetHealth(int healthValue) {
 	if (healthValue <= 0) {
 		health = 0;
@@ -104,6 +107,8 @@ void Character::PrintCharacterStats() {
 		"Magic Damage: " << currentMagicDamage << "  " <<
 		"Defense: " << currentPhysDefense << "  " <<
 		"Magic Resist: " << currentMagicResist << std::endl;
+	std::cout << "Buffs: "; PrintBuffData(); std::cout << std::endl;
+	std::cout << "Debuffs: "; PrintDebuffData(); std::cout << std::endl;
 }
 
 void Character::EquipItem(EquippedItem* item) {
@@ -304,6 +309,10 @@ void Character::ApplyDebuff(DebuffData* debuff) {
 	}
 	if (debuffPresent == false) {
 		debuffs.push_back(debuff);
+		BuffType presentBuff = buffDebuffHandler.GetDebuffOpposite(debuff->GetDebuffType());
+		if (BuffPresentCheck(presentBuff) == true) {
+			RemoveBuff(buffs[GetBuffPosition(presentBuff)]);
+		}
 		CalculateDebuff(debuff->GetDebuffType(), debuff->GetAfflictionModifier());
 	}
 	else {
@@ -359,9 +368,6 @@ void Character::UpdateDebuffs() {
 			it++;
 		}
 	}
-	for (auto& debuff : debuffs) {
-		debuff->PrintDebuffData();
-	}
 }
 
 void Character::RemoveDebuff(DebuffData* debuff) {
@@ -384,3 +390,131 @@ void Character::RemoveDebuff(DebuffData* debuff) {
 	}
 }
 
+void Character::ApplyBuff(BuffData* buff) {
+	bool buffPresent = false;
+	unsigned int position = 0;
+	for (unsigned int i = 0; i < buffs.size(); i++) {
+		if (buffs[i]->GetBuffType() == buff->GetBuffType()) {
+			buffPresent = true;
+			position = i;
+			break;
+		}
+	}
+	if (buffPresent == false) {
+		buffs.push_back(buff);
+		DebuffType presentDebuff = buffDebuffHandler.GetBuffOpposite(buff->GetBuffType());
+		if (DebuffPresentCheck(presentDebuff) == true) {
+			RemoveDebuff(debuffs[GetDebuffPosition(presentDebuff)]);
+		}
+		CalculateBuff(buff->GetBuffType(), buff->GetBuffModifier());
+	}
+	else {
+		buffs[position]->BuffAlreadyPresent();
+	}
+}
+void Character::CalculateBuff(BuffType buff, double buffMultiplier) {
+	switch (buff) {
+	case BuffType::PHYSDAMAGE:
+		prevPhysDamage.first = BuffType::PHYSDAMAGE;
+		prevPhysDamage.second = currentPhysDamage;
+		SetPhysDamage(CalculateScale(currentPhysDamage, buffMultiplier));
+		break;
+	case BuffType::MAGICDAMAGE:
+		prevMagicDamage.first = BuffType::MAGICDAMAGE;
+		prevMagicDamage.second = currentMagicDamage;
+		SetMagicDamage(CalculateScale(currentMagicDamage, buffMultiplier));
+		break;
+	case BuffType::SPEED:
+		prevSpeed.first = BuffType::SPEED;
+		prevSpeed.second = currentSpeed;
+		SetSpeed(CalculateScale(currentSpeed, buffMultiplier));
+		break;
+	case BuffType::PHYSDEFENSE:
+		prevPhysDefense.first = BuffType::PHYSDEFENSE;
+		prevPhysDefense.second = currentPhysDefense;
+		SetPhysDefense(CalculateScale(currentPhysDefense, buffMultiplier));
+		break;
+	case BuffType::MAGICRESIST:
+		prevMagicResist.first = BuffType::MAGICRESIST;
+		prevMagicResist.second = currentMagicResist;
+		SetMagicResist(CalculateScale(currentMagicResist, buffMultiplier));
+	}
+}
+void Character::UpdateBuffs() {
+	BuffData* tmp = NULL;
+	for (std::vector<BuffData*>::iterator it = buffs.begin(); it != buffs.end();) {
+		if ((*it)->GetNumOfTurnsLeft() == 1) {
+			tmp = (*it);
+			it = buffs.erase(it);
+			RemoveBuff(tmp);
+			tmp->DecreaseNumOfTurns();
+		}
+		else {
+			(*it)->DecreaseNumOfTurns();
+			it++;
+		}
+	}
+}
+void Character::RemoveBuff(BuffData* buff) {
+	switch (buff->GetBuffType()) {
+	case BuffType::PHYSDAMAGE:
+		SetBasePhysDefense(prevPhysDamage.second);
+	case BuffType::MAGICDAMAGE:
+		SetMagicDamage(prevMagicDamage.second);
+	case BuffType::SPEED:
+		SetSpeed(prevSpeed.second);
+	case BuffType::PHYSDEFENSE:
+		SetPhysDefense(prevPhysDefense.second);
+	case BuffType::MAGICRESIST:
+		SetMagicResist(prevMagicResist.second);
+	}
+}
+
+
+bool Character::BuffPresentCheck(BuffType buff) {
+	for (unsigned int i = 0; i < buffs.size(); i++) {
+		if (buffs[i]->GetBuffType() == buff) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Character::DebuffPresentCheck(DebuffType debuff) {
+	for (unsigned int i = 0; i < debuffs.size(); i++) {
+		if (debuffs[i]->GetDebuffType() == debuff) {
+			return true;
+		}
+	}
+	return false;
+}
+
+int Character::GetDebuffPosition(DebuffType debuff) {
+	for (unsigned int i = 0; i < debuffs.size(); i++) {
+		if (debuffs[i]->GetDebuffType() == debuff) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+int Character::GetBuffPosition(BuffType buff) {
+	for (unsigned int i = 0; i < buffs.size(); i++) {
+		if (buffs[i]->GetBuffType() == buff) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void Character::PrintBuffData() {
+	for (auto& buff : buffs) {
+		buff->PrintBuffData();
+	}
+}
+
+void Character::PrintDebuffData() {
+	for (auto& debuff : debuffs) {
+		debuff->PrintDebuffData();
+	}
+}
