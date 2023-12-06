@@ -1,7 +1,13 @@
 #pragma once
 #include "Character.h"
+#include "PlayerCharacter.h"
 #include "InitBattleMenuState.h"
 #include "MainMenuState.h"
+#include "DamageSpell.h"
+#include "SpellHandler.h"
+#include "Spell.h"
+#include "ConsumableItem.h"
+#include "ConsumableItemFactory.h"
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -16,17 +22,23 @@ class InitBattle
 private:
 	const static int partySize = 3;
 	const static int enemyPartySize = 4;
-	Character* playerParty[partySize];
+	PlayerCharacter* playerParty[partySize];
 	Character* enemyParty[enemyPartySize];
-	vector<Character*> availablePartyMembers;
+	vector<PlayerCharacter*> availablePartyMembers;
 	vector<EquippedItem*> availableEquippedItems;
+	vector<ConsumableItem*> availableConsumables;
+	ConsumableItemFactory consumableFactory;
 	InitBattleMenuState* menuState;
+	SpellHandler spellHandler;
 public:
 	void InitializeGame();
 	void InitPlayerCharacters();
 	void InitEquippedItems();
+	void InitConsumableItems();
+
 	void BuildItemSlotMap(unordered_map<string, ItemSlot>& itemSlotMap);
 	void BuildBuffTypeMap(unordered_map<string, BuffType>& buffTypeMap);
+
 	void AddCharacterToParty();
 	void RemoveCharacterFromParty();
 	void PrintAvailablePartyMembers();

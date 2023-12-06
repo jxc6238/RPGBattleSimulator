@@ -1,0 +1,14 @@
+{
+  "DamageSpells": [
+    {
+      "Name": "Fire",
+      "MultiTarget": false,
+      "SpellStrength": 1.1
+    },
+    {
+      "Name": "Ultra Fire",
+      "MultiTarget": true,
+      "SpellStrength": 1.05
+    }
+  ]
+}

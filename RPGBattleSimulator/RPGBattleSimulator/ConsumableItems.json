@@ -1,0 +1,20 @@
+{
+  "ConsumableItems": [
+    {
+      "Type": "NonStatus",
+      "Name": "Health Potion",
+      "HealthItem": true,
+      "Modifier": 20
+    },
+    {
+      "Type": "Buff",
+      "Name": "Wing",
+      "Buff": "SPEED"
+    },
+    {
+      "Type": "Debuff",
+      "Name": "Lead",
+      "Debuff":  "SLOW"
+    }
+  ]
+}

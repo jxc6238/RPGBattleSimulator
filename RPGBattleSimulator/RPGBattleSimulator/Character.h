@@ -6,15 +6,16 @@
 #include "Spell.h"
 #include <string>
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 
 class Spell;
 
 class Character
 {
-private:
+protected:
 	string name;
-	int health, mana;
+	int health, mana, maxHealth, maxMana;
 	double baseSpeed, currentSpeed, speedMult;
 	double basePhysDamage, currentPhysDamage, physDamageMult;
 	double baseMagicDamage, currentMagicDamage, magicDamageMult;
@@ -22,17 +23,18 @@ private:
 	double baseMagicResist, currentMagicResist, magicResistMult;
 	pair<BuffType, double> prevSpeed, prevPhysDamage, prevMagicDamage, 
 		prevPhysDefense, prevMagicResist;
-	CurrentlyEquippedItems equippedItems;
 	vector<DebuffData*> debuffs;
 	vector<BuffData*> buffs;
-	vector<Spell*> spells;
+	vector<Spell*> spellsVector;
+	unordered_map<string, Spell*> spellsMap;
 	static BuffDebuffHandler buffDebuffHandler;
 
 public:
 	Character(string name, int health, int mana, double baseSpeed,
 		double basePhysDamage, double baseMagicDamage,
 		double basePhysDefense, double baseMagicResist) : name(name), health(health),
-		mana(mana), baseSpeed(baseSpeed), currentSpeed(baseSpeed), speedMult(1),
+		mana(mana), maxHealth(health), maxMana(mana),
+		baseSpeed(baseSpeed), currentSpeed(baseSpeed), speedMult(1),
 		basePhysDamage(basePhysDamage), currentPhysDamage(basePhysDamage),
 		physDamageMult(1), baseMagicDamage(baseMagicDamage),
 		currentMagicDamage(baseMagicDamage), magicDamageMult(1),
@@ -44,7 +46,7 @@ public:
 		prevMagicDamage(BuffType::MAGICDAMAGE, baseMagicDamage),
 		prevPhysDefense(BuffType::PHYSDEFENSE, basePhysDefense),
 		prevMagicResist(BuffType::MAGICRESIST, baseMagicResist),
-		equippedItems(), debuffs(), spells() {};
+		debuffs(), spellsVector() {};
 
 	void SetHealth(int healthValue);
 	void SetMana(int manaValue);
@@ -75,14 +77,9 @@ public:
 	double GetPhysDefense();
 	double GetMagicResist();
 
-	void EquipItem(EquippedItem* item);
-	void UnequipItem();
-	void EquipScale(BuffType buff, double multiplier);
-	double CalculateScale(double currentVal, double buffVal);
-	void UnequipDescale(const vector<ItemBuffPair>& buffs);
-	double CalculateDescale(double currentVal, double buffVal);
 	void PrintCharacterStats();
-	void PrintItemSlots();
+	double CalculateScale(double currentVal, double buffVal);
+	double CalculateDescale(double currentVal, double buffVal);
 
 	void ApplyDebuff(DebuffData* debuff);
 	void CalculateDebuff(DebuffType debuffType, double debuffMultiplier);
@@ -101,5 +98,8 @@ public:
 
 	void PrintBuffData();
 	void PrintDebuffData();
+
+	void AddSpell(Spell* spell);
+	void RemoveSpell(string spell);
 };
 

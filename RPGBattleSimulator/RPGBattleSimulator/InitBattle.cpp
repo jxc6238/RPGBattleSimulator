@@ -5,7 +5,7 @@ void InitBattle::InitPlayerCharacters() {
 	std::ifstream ifs("PartyMembers.json");
 	json partyMemJson = json::parse(ifs);
 	for (auto& partyMember : partyMemJson["PartyMembers"]) {
-		Character* tmpCharacter = new Character(partyMember["Name"],
+		PlayerCharacter* tmpCharacter = new PlayerCharacter(partyMember["Name"],
 			partyMember["Health"],
 			partyMember["Mana"],
 			partyMember["BaseSpeed"],
@@ -20,6 +20,9 @@ void InitBattle::InitPlayerCharacters() {
 void InitBattle::InitializeGame() {
 	InitPlayerCharacters();
 	InitEquippedItems();
+	spellHandler.InitSpells();
+	InitConsumableItems();
+	AddCharacterToParty();
 	menuState = new MainMenuState();
 	do {
 		InitBattleMenuState* tmp = menuState;
@@ -86,6 +89,16 @@ void InitBattle::BuildBuffTypeMap(unordered_map<string, BuffType>& buffTypeMap) 
 	buffTypeMap["MAGICRESIST"] = BuffType::MAGICRESIST;
 }
 
+void InitBattle::InitConsumableItems() {
+	std::ifstream ifs("ConsumableItems.json");
+	json consumables = json::parse(ifs);
+	ConsumableItem* consumable;
+	for (auto& item : consumables["ConsumableItems"]) {
+		consumable = consumableFactory.BuildConsumableItem(item["Type"], item);
+		availableConsumables.push_back(consumable);
+	}
+}
+
 void InitBattle::AddCharacterToParty() {
 	unsigned int characterSelection = 0;
 	unsigned int positionSelection = 0;
@@ -101,7 +114,7 @@ void InitBattle::AddCharacterToParty() {
 	} while (positionSelection < 1 || positionSelection > 3);
 	std::cout << endl;
 	positionSelection--;
-	Character* tmpChar;
+	PlayerCharacter* tmpChar;
 	tmpChar = availablePartyMembers[characterSelection];
 	availablePartyMembers.erase(availablePartyMembers.begin() + characterSelection);
 	playerParty[positionSelection] = tmpChar;

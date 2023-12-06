@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="BuffConsumableItem.cpp" />
     <ClCompile Include="BuffData.cpp" />
     <ClCompile Include="BuffDebuffHandler.cpp" />
     <ClCompile Include="BuffFactory.cpp" />
@@ -146,7 +148,9 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterSelectMenuState.cpp" />
     <ClCompile Include="ConsumableItem.cpp" />
+    <ClCompile Include="ConsumableItemFactory.cpp" />
     <ClCompile Include="DamageSpell.cpp" />
+    <ClCompile Include="DebuffConsumableItem.cpp" />
     <ClCompile Include="DebuffData.cpp" />
     <ClCompile Include="DebuffFactory.cpp" />
     <ClCompile Include="DebuffSpell.cpp" />
@@ -158,10 +162,15 @@
     <ClCompile Include="ItemMenuState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="ModifierSpell.cpp" />
+    <ClCompile Include="NonBuffDebuffConsumableItem.cpp" />
+    <ClCompile Include="PlayerCharacter.cpp" />
     <ClCompile Include="RPGBattleSimulator.cpp" />
     <ClCompile Include="Spell.cpp" />
+    <ClCompile Include="SpellHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Battle.h" />
+    <ClInclude Include="BuffConsumableItem.h" />
     <ClInclude Include="BuffData.h" />
     <ClInclude Include="BuffDebuffHandler.h" />
     <ClInclude Include="BuffFactory.h" />
@@ -170,8 +179,10 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterSelectMenuState.h" />
     <ClInclude Include="ConsumableItem.h" />
+    <ClInclude Include="ConsumableItemFactory.h" />
     <ClInclude Include="CurrentlyEquippedItems.h" />
     <ClInclude Include="DamageSpell.h" />
+    <ClInclude Include="DebuffConsumableItem.h" />
     <ClInclude Include="DebuffData.h" />
     <ClInclude Include="DebuffFactory.h" />
     <ClInclude Include="DebuffSpell.h" />
@@ -186,15 +197,21 @@
     <ClInclude Include="ItemSlotsEnum.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="ModifierSpell.h" />
+    <ClInclude Include="NonBuffDebuffConsumableItem.h" />
+    <ClInclude Include="PlayerCharacter.h" />
     <ClInclude Include="Spell.h" />
+    <ClInclude Include="SpellHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PartyMembers.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ConsumableItems.json" />
     <None Include="EquippedItems.json" />
+    <None Include="HealingSpells.json" />
     <None Include="packages.config" />
     <None Include="PartyMembers.json" />
+    <None Include="DamageSpells.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

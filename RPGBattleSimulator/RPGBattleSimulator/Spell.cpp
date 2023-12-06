@@ -12,3 +12,7 @@ string Spell::MultiTarget() {
 		return "single target";
 	}
 }
+
+string Spell::GetSpellName() {
+	return name;
+}

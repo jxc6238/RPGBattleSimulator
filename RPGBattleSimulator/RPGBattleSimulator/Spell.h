@@ -14,6 +14,7 @@ public:
 	
 	virtual void PrintSpellData();
 	string MultiTarget();
+	string GetSpellName();
 	virtual void CastSingleTarget(Character* caster, Character* target) = 0;
 	virtual void CastMultiTarget(Character* caster, 
 		std::vector<Character*> targets) = 0;
